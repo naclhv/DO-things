@@ -1,0 +1,89 @@
+    1  exit
+    2  ls -a
+    3  cat .bashrc 
+    4  ls -a
+    5  cat .bash_history 
+    6  cd ..
+    7  ls
+    8  cd ..
+    9  ls
+   10  cd bin
+   11  ls
+   12  cd
+   13  ls
+   14  cat /etc/apt/sources.list
+   15  whatis apt-get
+   16  man apt-get
+   17  apt-get update
+   18  su
+   19  cd
+   20  git init
+   21  git help configure
+   22  ls -a
+   23  git help config
+   24  git config --global user.name "DO second"
+   25  git config --global user.email "cheol@uclink4.berkeley.edu"
+   26  ls -al ~/.ssh
+   27  ssh-keygen -t rsa -C "cheol@uclink4.berkeley.edu"
+   28  ls
+   29  ls -a
+   30  cd .ssh
+   31  ls
+   32  cd id_rsa
+   33  cat id_rsa
+   34  cat id_rsa.pub
+   35  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChMuz38i+q3fS5g7C0RXnqr+vGExQRWccrgZpN3KmoRyUqQ/hnBGv0azwJGoUL130VdnmWE+pEHDWGcezZ6q5J34VqZZaJWq+WQuC2jB0guki8JBeZwaexMyU66vy7lwReI3aq9D6XE531eHxaAFnSsPiX67HIoGuoDaS1SzjgSKliBMSmIVxW+ptuV0yw6AI4efILkQkwvw7t02NtXouXRMZvytEGPG/moAd9qMpVgqeIPmNNR4ffB3jef5h11R8V/3rmNYcGtftSfbOnWBodOLbSo7FjW/vF5VCg4nJcmyC7qcxwBzgilasP135HqbKKa9Uxnjet4aAj2aPNTfdx cheol@uclink4.berkeley.edu
+   36  whatis xclip
+   37  su
+   38  eval "$(ssh-agent -s)"
+   39  ssh-add ~/.ssh/id_rsa
+   40  ls
+   41  cd
+   42  ls
+   43  ls -a
+   44  xclip -sel clip < ~/.ssh/id_rsa.pub
+   45  ssh -T git@github.com
+   46  git remote
+   47  git remote -v
+   48  git branch
+   49  git clone git@github.com:naclhv/fractal-maker.git
+   50  ls
+   51  cd fractal-maker
+   52  ls
+   53  vim README.md 
+   54  apt-get install vim
+   55  su
+   56  ls
+   57  vim README.md 
+   58  git status
+   59  git remote -v
+   60  git commit
+   61  git remote -v
+   62  git branch
+   63  git push origin master
+   64  git add README.md
+   65  git status
+   66  git commit
+   67  git status
+   68  git push origin master
+   69  git remote add DO git@github.com:naclhv/DO-things.git
+   70  git remote -v
+   71  git help remote
+   72  git remote rename origin fractal
+   73  git remote -v
+   74  git help clone
+   75  git clone DO
+   76  git clone https://github.com/naclhv/DO-things
+   77  ls
+   78  cd DO-things/
+   79  ls
+   80  cat README.md 
+   81  cd ..
+   82  ls
+   83  mv DO-things/ ~
+   84  ls
+   85  cd ..
+   86  ls
+   87  cd DO-things/
+   88  ls
+   89  history > hist.txt
