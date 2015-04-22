@@ -22,9 +22,9 @@
    22  ls -a
    23  git help config
    24  git config --global user.name "DO second"
-   25  git config --global user.email "cheol@uclink4.berkeley.edu"
+   25  git config --global user.email ""
    26  ls -al ~/.ssh
-   27  ssh-keygen -t rsa -C "cheol@uclink4.berkeley.edu"
+   27  ssh-keygen -t rsa -C ""
    28  ls
    29  ls -a
    30  cd .ssh
