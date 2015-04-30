@@ -1,7 +1,12 @@
 import time
 import math
 def primeListFile(upto,fileName):
-    f=open(fileName,"r")
+    try:
+        f=open(fileName,"r")
+    except:
+        f=open(fileName,"w")
+        f.write("2, 3, 5, 7, 11")
+        f=open(fileName,"r")
     #print(f.readline().split(", "))
     primeList=[int(string) for string in f.readline().split(", ")]
     if upto >= primeList[-1]+2:
@@ -84,23 +89,25 @@ def compatible(i,combo,primeList):
         
         if isPrime(cat1, primeList) and isPrime(cat2,primeList):
             output.append(n)
-        if int(cat1)>10000000 or int(cat2)>10000000:
-            print("beyond the size of files")
     output.append(i)
     return tuple(output)
         
-def announce(newCombo,catCombos,fives):
+def announce(newCombo,catCombos,fours,fives):
     if len(newCombo)>=3:
         print(newCombo, "length:",len(catCombos))
         if len(newCombo)>=5:
-            print("found one!         ", newCombo)
+            print("found 5 combo!!!         ", newCombo)
             fives.append(newCombo)
+        elif len(newCombo)==4:
+            print("found 4 combo:         ", newCombo)
+            fours.append(newCombo)
 
 def main60():
     primeList=primeListFile(10000000,"primes.txt")
     catCombos=[(1,3)]
     i=4
     fives=[]
+    fours=[]
     done=False
     #print(isPrime(1234123478,primeList))
     while not done:
@@ -111,28 +118,38 @@ def main60():
             if len(newCombo)==len(catCombos[j])+1:
                 catCombos[j]=newCombo
                 fullReplace.append(newCombo)
-                announce(newCombo,catCombos,fives)
+                announce(newCombo,catCombos,fours,fives)
             elif len(newCombo)>1 and not (newCombo in toAdd):
                 toAdd.append(newCombo)
         if len(toAdd)==0 and len(fullReplace)==0:
             toAdd.append((i,))
         for combo in toAdd:
             if not (combo in fullReplace):
-                announce(newCombo,catCombos,fives)
+                announce(newCombo,catCombos,fours,fives)
                 catCombos.append(combo)
         i+=1 
-        if i>1200 or len(fives)>=4:
+        if i>701 or len(fives)>=4:
             done=True            
     for combo in fives:
-        print("found it:")
+        print("Fives:")
         for i in combo:
             print("i=",i,"prime number:",primeList[i],end=", ")
         print()
         print("total=",comboTotal(combo,primeList))
+    for combo in fours:
+        print("Fours:")
+        for i in combo:
+            print("i=",i,"prime number:",primeList[i],end=", ")
+        print()
+        print("total=",comboTotal(combo,primeList))
+    outFile=open("foursFives.txt","w")
+    outFile.write(str(fours))
+    outFile.write("\n\n")
+    outFile.write(str(fives))
+    outFile.close()
 
 
-
-
+#[(1, 3, 28, 121), (8, 63, 122, 143), (4, 51, 175, 282), (4, 51, 181, 282), (4, 8, 131, 285), (8, 122, 143, 285), (1, 6, 86, 311), (10, 187, 307, 338), (1, 4, 311, 341), (1, 11, 18, 351), (56, 112, 153, 399), (3, 202, 243, 432), (3, 17, 263, 449), (3, 315, 424, 449), (3, 144, 386, 473), (11, 243, 393, 484), (21, 162, 186, 489), (21, 278, 458, 496), (11, 166, 336, 504), (3, 83, 232, 504), (272, 296, 496, 509), (3, 7, 24, 519), (3, 7, 203, 519), (229, 392, 479, 522), (139, 217, 322, 547), (228, 408, 524, 558), (214, 333, 404, 568), (1, 3, 99, 572), (1, 11, 351, 572), (8, 14, 233, 575), (3, 315, 449, 577), (1, 90, 112, 582), (275, 424, 509, 586), (25, 381, 392, 591), (308, 462, 523, 614), (77, 154, 542, 618), (6, 399, 541, 627), (14, 160, 227, 657), (23, 27, 177, 665), (8, 303, 497, 675), (45, 460, 590, 682), (4, 553, 626, 686), (14, 53, 685, 698), (80, 86, 102, 701)]
 
 
 
