@@ -1,4 +1,5 @@
 import time
+import math
 def primeListFile(upto,fileName):
     f=open(fileName,"r")
     #print(f.readline().split(", "))
@@ -25,6 +26,7 @@ def comboTotal(combo,primeList):
         total+=primeList[i]
     return total
 
+"""
 def increment(combo,n,primeList):
     combo[-1]+=1
     total=comboTotal(combo,primeList)
@@ -39,47 +41,98 @@ def increment(combo,n,primeList):
         if index==0:
             break
     return total
+"""
 
+def isInList(val,list1):
+    for element in list1:
+        if val==element:
+            return True
+        elif element>val:
+            return False
+    return False
+
+def isPrime(val,primeList):
+    if val<10000000:
+        return isInList(val,primeList)
+    else:
+        i=0
+        divisor=primeList[i]
+        maxDiv=math.ceil(math.sqrt(val))
+        while divisor < maxDiv:
+            if val%divisor==0:
+                return False
+            i+=1
+            divisor=primeList[i]
+        return True
+
+
+"""
 def checkPrimeCat(combo,primeList):
-    choose2=((i,j) for i in range(len(combo)) for j in range(i+1,len(combo)))
-    for ij in choose2:
-        cat1="".join([str(primeList[combo[ij[0]]]),str(primeList[combo[ij[1]]])])
-        cat2="".join([str(primeList[combo[ij[1]]]),str(primeList[combo[ij[0]]])])
-        if not (int(cat1) in primeList and int(cat2) in primeList):
+    for i in combo[1:]:
+        cat1="".join([str(primeList[combo[[i]]]),str(primeList[combo[0]])])
+        cat2="".join([str(primeList[combo[[0]]]),str(primeList[combo[i]])])
+        if not isInList(int(cat1), primeList) or not isInList(int(cat2),primeList):
             return False
     return True
+"""
+
+def compatible(i,combo,primeList):
+    output=[]
+    for n in combo:
+        cat1=int("".join([str(primeList[i]),str(primeList[n])]))
+        cat2=int("".join([str(primeList[n]),str(primeList[i])]))
+        
+        if isPrime(cat1, primeList) and isPrime(cat2,primeList):
+            output.append(n)
+        if int(cat1)>10000000 or int(cat2)>10000000:
+            print("beyond the size of files")
+    output.append(i)
+    return tuple(output)
+        
+def announce(newCombo,catCombos,fives):
+    if len(newCombo)>=3:
+        print(newCombo, "length:",len(catCombos))
+        if len(newCombo)>=5:
+            print("found one!         ", newCombo)
+            fives.append(newCombo)
 
 def main60():
-    primeList=primeListFile(9000000,"primes.txt")
-    catCombos=[(1,)]
-    i=3
+    primeList=primeListFile(10000000,"primes.txt")
+    catCombos=[(1,3)]
+    i=4
     fives=[]
     done=False
+    #print(isPrime(1234123478,primeList))
     while not done:
         toAdd=[]
-        for combo in catCombos:
-            #print((i,),combo)
-            consider=(i,)+combo
-            #print(consider)
-            if checkPrimeCat(consider,primeList):
-                toAdd.append(consider)
-                if len(consider)>=3:
-                    print(consider)
-                    if len(consider)==5:
-                        fives.append(consider)
-                        print("yay!", comboTotal(consider,primeList))
-        catCombos+=toAdd
-        catCombos.append((i,))
-        #print(i, len(catCombos))
-        i+=1
-        if i>1000:
-            done=True
+        fullReplace=[]
+        for j in range(len(catCombos)):
+            newCombo=compatible(i,catCombos[j],primeList)
+            if len(newCombo)==len(catCombos[j])+1:
+                catCombos[j]=newCombo
+                fullReplace.append(newCombo)
+                announce(newCombo,catCombos,fives)
+            elif len(newCombo)>1 and not (newCombo in toAdd):
+                toAdd.append(newCombo)
+        if len(toAdd)==0 and len(fullReplace)==0:
+            toAdd.append((i,))
+        for combo in toAdd:
+            if not (combo in fullReplace):
+                announce(newCombo,catCombos,fives)
+                catCombos.append(combo)
+        i+=1 
+        if i>1200 or len(fives)>=4:
+            done=True            
     for combo in fives:
         print("found it:")
         for i in combo:
             print("i=",i,"prime number:",primeList[i],end=", ")
         print()
         print("total=",comboTotal(combo,primeList))
+
+
+
+
 
 
 
