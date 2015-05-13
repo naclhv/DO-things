@@ -1,4 +1,4 @@
 # DO-things
 
-Random things
+Some random things
 from DO:
